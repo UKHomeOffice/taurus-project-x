@@ -15,8 +15,6 @@ pipeline:
 
   performance-test:
     image: blazemeter/taurus:latest
-    volumes:
-      - performance.yml:/bzt-config/performance.yml
     commands:
       - rm -rf `pwd`/taurus_artifacts && mkdir `pwd`/taurus_artifacts
       - bzt -l `pwd`/taurus_artifacts/bzt.log performance.yml

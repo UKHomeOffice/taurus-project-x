@@ -1,10 +1,10 @@
 pipeline:
 
-#  security-check:
-#    image: dan78uk/node-build-docker:v1
-#    commands:
-#      - git log -1 -p | scanrepo
-#      - nsp check
+  security-check:
+    image: dan78uk/node-build-docker:v1
+    commands:
+      - git log -1 -p | scanrepo
+      - nsp check
 
   unit-test:
     image: node:6.11

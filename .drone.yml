@@ -5,13 +5,13 @@ pipeline:
 #    commands:
 #      - git log -1 -p | scanrepo
 #      - nsp check
-#
-#  unit-test:
-#    image: node:6.11
-#    commands:
-#      - npm install --quiet
-#      - npm run build:test
-#      - npm test
+
+  unit-test:
+    image: node:6.11
+    commands:
+      - npm install --quiet
+      - npm run build:test
+      - npm test
 
   performance-test:
     image: blazemeter/taurus:latest

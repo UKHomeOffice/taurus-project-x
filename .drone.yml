@@ -1,0 +1,47 @@
+pipeline:
+
+#  security-check:
+#    image: dan78uk/node-build-docker:v1
+#    commands:
+#      - git log -1 -p | scanrepo
+#      - nsp check
+#
+#  unit-test:
+#    image: node:6.11
+#    commands:
+#      - npm install --quiet
+#      - npm run build:test
+#      - npm test
+
+  performance-test:
+    image: blazemeter/taurus:latest
+    volumes:
+      - performance.yml:/bzt-config/performance.yml
+    commands:
+      - rm -rf `pwd`/taurus_artifacts && mkdir `pwd`/taurus_artifacts
+      - bzt -l `pwd`/taurus_artifacts/bzt.log performance.yml
+
+  send-report:
+    image: node:6.11
+    commands:
+      - ls `pwd`/taurus_artifacts
+#    image: ...s3?
+#    commands:
+#      - aws-cli ....
+
+#  s3:
+#    image: plugins/s3
+#    bucket: performance-reports
+#    access_key: a50d28f4dd477bc184fbd10b376de753
+#    secret_key: bc5785d3ece6a9cdefa42eb99b58986f9095ff1c
+#    source: taurus-artifacts/*
+#    target: /project/timestamp
+
+services:
+
+  dind:
+    image: docker:1.12-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"

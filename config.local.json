@@ -1,0 +1,11 @@
+{
+  "Server": {
+    "port": 3000,
+    "host": "localhost"
+  },
+
+  "ClinicService": {
+    "endpoint": "https://data.gov.uk/data/api/service/health/clinics"
+  }
+
+}

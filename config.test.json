@@ -1,0 +1,12 @@
+{
+
+  "Server": {
+    "port": 1337,
+    "host": "localhost"
+  },
+
+  "ClinicService": {
+    "endpoint": "http://mock.endpoint"
+  }
+
+}

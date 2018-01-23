@@ -10,7 +10,6 @@ pipeline:
     image: node:6.11
     commands:
       - npm install --quiet
-      - npm run build:test
       - npm test
 
   performance-test:

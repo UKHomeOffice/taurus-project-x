@@ -15,13 +15,13 @@ pipeline:
   performance-test:
     image: blazemeter/taurus:latest
     commands:
-      - rm -rf `pwd`/taurus_artifacts && mkdir `pwd`/taurus_artifacts
-      - bzt -l `pwd`/taurus_artifacts/bzt.log performance.yml
+      - mkdir taurus_artifacts
+      - bzt -l taurus_artifacts/bzt.log performance.yml
 
   send-report:
     image: node:6.11
     commands:
-      - ls `pwd`/taurus_artifacts
+      - ls taurus_artifacts
 #    image: ...s3?
 #    commands:
 #      - aws-cli ....

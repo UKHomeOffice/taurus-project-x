@@ -6,5 +6,7 @@ node_modules/
 ## Directory-based project format:
 .idea/
 
+taurus_artifacts/
+
 dist/
 config.json

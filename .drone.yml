@@ -16,7 +16,7 @@ pipeline:
     image: blazemeter/taurus:latest
     commands:
       - mkdir taurus_artifacts
-      - bzt -l taurus_artifacts/bzt.log performance.yml
+      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
 
   send-report:
     image: node:6.11
@@ -33,11 +33,3 @@ pipeline:
 #    secret_key: bc5785d3ece6a9cdefa42eb99b58986f9095ff1c
 #    source: taurus-artifacts/*
 #    target: /project/timestamp
-
-services:
-
-  dind:
-    image: docker:1.12-dind
-    command:
-      - "-s"
-      - "overlay"

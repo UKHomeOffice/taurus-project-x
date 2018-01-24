@@ -29,15 +29,14 @@ pipeline:
   debug:
     image: node:6.11
     secrets:
-      - source: s3_access_key
+      - source: test
         target: access_key
-      - source: s3_access_key
-        target: secret_key
     commands:
       - echo ====
-      - echo $s3_access_key
+      - echo $ACCESS_KEY
       - echo ====
-      - echo access_key
+    when:
+      event: [pull_request, push]
 
   save-report:
     image: plugins/s3

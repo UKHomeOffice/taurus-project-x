@@ -26,6 +26,18 @@ pipeline:
       - mkdir taurus_artifacts
       - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
 
+  debug:
+    image: node:6.11
+    secrets:
+      - source: S3_ACCESS_KEY
+        target: access_key
+      - source: S3_SECRET_KEY
+        target: secret_key
+    commands:
+      - echo ====
+      - echo $S3_ACCESS_KEY
+      - echo ====
+
   save-report:
     image: plugins/s3
     secrets:
@@ -36,10 +48,6 @@ pipeline:
     bucket: taurus-project-x
     source: taurus_artifacts/*
     target: /
-    commands:
-      - echo ====
-      - echo $S3_ACCESS_KEY
-      - echo ====
 
 #  save-report:
 #    image: quay.io/ukhomeofficedigital/drone-s3cache:latest

@@ -29,13 +29,17 @@ pipeline:
   save-report:
     image: plugins/s3
     secrets:
-      - source: s3_access_key
+      - source: S3_ACCESS_KEY
         target: access_key
-      - source: s3_secret_key
+      - source: S3_SECRET_KEY
         target: secret_key
     bucket: taurus-project-x
     source: taurus_artifacts/*
     target: /
+    commands:
+      - echo ====
+      - echo $S3_ACCESS_KEY
+      - echo ====
 
 #  save-report:
 #    image: quay.io/ukhomeofficedigital/drone-s3cache:latest

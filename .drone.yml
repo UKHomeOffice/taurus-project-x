@@ -1,16 +1,16 @@
 pipeline:
 
-  security-check:
-    image: dan78uk/node-build-docker:v1
-    commands:
-      - git log -1 -p | scanrepo
-      - nsp check
-
-  unit-test:
-    image: node:6.11
-    commands:
-      - npm install --quiet
-      - npm test
+#  security-check:
+#    image: dan78uk/node-build-docker:v1
+#    commands:
+#      - git log -1 -p | scanrepo
+#      - nsp check
+#
+#  unit-test:
+#    image: node:6.11
+#    commands:
+#      - npm install --quiet
+#      - npm test
 
 #  test-deployment:
 #    # step w/ kube_token & kube_server secrets
@@ -38,18 +38,19 @@ pipeline:
     when:
       event: [pull_request, push]
 
-  save-report:
-    image: plugins/s3
+#  save-report:
+#    image: plugins/s3
 #    secrets:
 #      - source: s3_access_key
 #        target: access_key
 #      - source: s3_secret_key
 #        target: secret_key
-    bucket: taurus-project-x
-    source: taurus_artifacts/*
-    target: /
+#    bucket: taurus-project-x
+#    source: taurus_artifacts/*
+#    target: /
+#    access_key:
 
-#  save-report:
-#    image: quay.io/ukhomeofficedigital/drone-s3cache:latest
-#    drone_s3_cache_folders: "taurus_artifacts"
-#    drone_s3_cache_mode: "push"
+  save-report:
+    image: quay.io/ukhomeofficedigital/drone-s3cache:latest
+    drone_s3_cache_folders: "taurus_artifacts"
+    drone_s3_cache_mode: "push"

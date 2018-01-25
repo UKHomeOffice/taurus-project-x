@@ -46,5 +46,4 @@ pipeline:
       - source: s3_secret_key
         target: secret_key
     commands:
-      - /bin/s3secrets --region eu-west-2 --access-key $ACCESS_KEY --secret-key $SECRET_KEY list --bucket taurus-project-x
-
+      - /bin/s3secrets --region eu-west-2 --access-key $ACCESS_KEY --secret-key $SECRET_KEY put taurus_artifacts/ --bucket taurus-project-x

@@ -1,7 +1,7 @@
-const Server = require("./src/Server/Server"),
-    routes = require("./src/Routes/routes"),
-    RoutesProvider = require("./src/Server/RoutesProvider/RoutesProvider"),
-    HapiProvider = require("./src/Server/HapiProvider/HapiProvider");
+import {Server} from "./src/Server/Server";
+import * as routes from "./src/Routes/routes";
+import {RoutesProvider} from "./src/Server/RoutesProvider/RoutesProvider";
+import {HapiProvider} from "./src/Server/HapiProvider/HapiProvider";
 
 
 const hapiProvider = new HapiProvider(),

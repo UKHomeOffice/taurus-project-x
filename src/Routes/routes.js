@@ -1,3 +1,1 @@
-module.exports = [
-    require("./GetClinicsByOutwardCodeRoute")
-];
+export {GetClinicsByOutwardCodeRoute} from "./GetClinicsByOutwardCodeRoute";

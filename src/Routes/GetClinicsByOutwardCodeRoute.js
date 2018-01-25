@@ -1,13 +1,14 @@
-const ClinicService = require("../ClinicService/ClinicService"),
-    Http = require("../Http/Http"),
-    clinicService = new ClinicService(new Http()),
+import {Http} from "../Http/Http";
+import {ClinicService} from "../ClinicService/ClinicService";
+
+const clinicService = new ClinicService(new Http()),
     _ = require("lodash");
 
 // TODO: handler should be tested
-module.exports = {
+export const GetClinicsByOutwardCodeRoute = {
     method: 'GET',
     path: '/clinics/postcode/{postcode}',
-    handler: function (request, response) {
+    handler: (request, response) => {
 
         // TODO: create PostCode
         // TODO: in PostCode handle lower case -> uppercase all?
@@ -27,4 +28,4 @@ module.exports = {
 
 
     }
-};
+}

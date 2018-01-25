@@ -1,6 +1,6 @@
 const Hapi = require("hapi");
 
-module.exports = class HapiProvder {
+export class HapiProvider {
 
     get() {
 
@@ -12,4 +12,4 @@ module.exports = class HapiProvder {
         return this.hapiServer;
     }
 
-};
+}

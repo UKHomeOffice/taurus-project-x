@@ -24,7 +24,7 @@ pipeline:
     image: blazemeter/taurus:latest
     commands:
       - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
-  
+
   save-report:
     image: quay.io/ukhomeofficedigital/awscli:latest
     secrets:
@@ -37,4 +37,4 @@ pipeline:
       - AWS_SECRET_ACCESS_KEY=$SECRET_KEY
       - AWS_DEFAULT_REGION=eu-west-2
     commands:
-      - aws s3 cp taurus_artifacts/ s3://taurus-project-x
+      - aws s3 cp README.md s3://taurus-project-x

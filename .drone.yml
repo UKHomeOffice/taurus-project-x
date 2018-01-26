@@ -32,9 +32,11 @@ pipeline:
         target: access_key
       - source: s3_secret_key
         target: secret_key
+      - source: kms_key
+        target: kms_key_id
     environment:
       - AWS_ACCESS_KEY_ID=$ACCESS_KEY
       - AWS_SECRET_ACCESS_KEY=$SECRET_KEY
       - AWS_DEFAULT_REGION=eu-west-2
     commands:
-      - aws s3 cp --sse-kms-key-id $KMS_KEY README.md s3://taurus-project-x
+      - aws s3 cp --sse-kms-key-id $KMS_KEY_ID README.md s3://taurus-project-x

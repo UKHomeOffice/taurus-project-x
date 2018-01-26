@@ -8,3 +8,12 @@ scenarios:
   quick-test:
     requests:
     - http://blazedemo.com
+
+reporting:
+- module: final-stats
+  summary: true
+  percentiles: true
+  failed-labels: false
+  test-duration: true
+  dump-xml: taurus_artifacts/report.xml
+  dump-csv: taurus_artifacts/report.csv

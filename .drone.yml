@@ -23,27 +23,18 @@ pipeline:
   performance-test:
     image: blazemeter/taurus:latest
     commands:
-      - mkdir taurus_artifacts
       - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
-
-#  save-report:
-#    image: plugins/s3
-#    secrets:
-#      - source: s3_access_key
-#        target: access_key
-#      - source: s3_secret_key
-#        target: secret_key
-#    bucket: taurus-project-x
-#    source: taurus_artifacts/*
-#    target: /
-#    access_key:
-
+  
   save-report:
-    image: quay.io/ukhomeofficedigital/s3secrets:v1.0.3
+    image: quay.io/ukhomeofficedigital/awscli:latest
     secrets:
       - source: s3_access_key
         target: access_key
       - source: s3_secret_key
         target: secret_key
+    environment:
+      - AWS_ACCESS_KEY_ID=$ACCESS_KEY
+      - AWS_SECRET_ACCESS_KEY=$SECRET_KEY
+      - AWS_DEFAULT_REGION=eu-west-2
     commands:
-      - /bin/s3secrets --region eu-west-2 --access-key $ACCESS_KEY --secret-key $SECRET_KEY put taurus_artifacts/ --bucket taurus-project-x
+      - aws s3 cp taurus_artifacts/ s3://taurus-project-x

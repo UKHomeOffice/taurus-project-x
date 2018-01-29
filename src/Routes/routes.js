@@ -1,1 +1,1 @@
-export {GetClinicsByOutwardCodeRoute} from "./GetClinicsByOutwardCodeRoute";
+export {PerformanceTestOne} from "./PerformanceTestOne";

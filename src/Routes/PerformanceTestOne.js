@@ -1,4 +1,5 @@
-const _ = require("lodash");
+const _ = require("lodash"),
+    Promise = require("bluebird");
 
 export const PerformanceTestOne = {
     method: 'GET',
@@ -6,7 +7,7 @@ export const PerformanceTestOne = {
     handler: (request, response) => {
 
         // maybe implement exponential backoff for more interesting graphs
-        return response({});
+        return Promise.resolve(response({ data: [1, 2, 3] }));
 
     }
 

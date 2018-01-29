@@ -37,4 +37,4 @@ pipeline:
     environment:
       - AWS_DEFAULT_REGION=eu-west-2
     commands:
-      - aws s3 cp README.md s3://taurus-project-x/README.md --sse aws:kms --sse-kms-key-id $${KMS_KEY_ID}
+      - AWS_ACCESS_KEY_ID=$${ACCESS_KEY} AWS_SECRET_ACCESS_KEY=$${SECRET_KEY} aws s3 cp README.md s3://taurus-project-x/README.md --sse aws:kms --sse-kms-key-id $${KMS_KEY_ID}

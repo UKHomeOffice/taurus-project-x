@@ -40,4 +40,4 @@ pipeline:
       - AWS_DEFAULT_REGION=eu-west-2
       - KMS_KEY_ID=$KMS_KEY_ID
     commands:
-      - aws s3 cp README.md s3://taurus-project-x/README.md --sse aws:kms --sse-kms-key-id $KMS_KEY_ID
+      - aws s3 cp README.md s3://taurus-project-x/README.md --sse aws:kms --sse-kms-key-id $${KMS_KEY_ID}

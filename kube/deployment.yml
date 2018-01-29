@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: taurus-project-x-deployemnt
+  labels:
+    app: taurus-project-x
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: taurus-project-x
+  template:
+    metadata:
+      labels:
+        app: taurus-project-x
+    spec:
+      containers:
+      - name: taurus-project-x
+        image: robdabin/taurus-project-x:0.0.0
+        ports:
+        - containerPort: 80
+        securityContext:
+          allowPrivilegeEscalation: false

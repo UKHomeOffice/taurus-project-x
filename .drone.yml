@@ -17,7 +17,7 @@ pipeline:
     secrets: [KUBE_SERVER, KUBE_TOKEN]
     commands:
       - echo "deploying to namespace...."
-      - ./scripts/deploy.sh
+      - bash scripts/deploy.sh
       - sleep 30
 
   # TODO: run performance test against deployed api

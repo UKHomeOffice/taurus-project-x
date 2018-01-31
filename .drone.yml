@@ -6,11 +6,11 @@ pipeline:
 #      - git log -1 -p | scanrepo
 #      - nsp check
 #
-#  unit-test:
-#    image: node:6.11
-#    commands:
-#      - npm install --quiet
-#      - npm test
+  build:
+    image: node:6.11
+    commands:
+      - npm install --quiet
+      - npm run build
 
   publish-image:
     image: docker:1.11
@@ -22,8 +22,6 @@ pipeline:
       - DOCKER_BASEDIR=/ukhomeofficedigital/
       - DOCKER_REPO_USER=ukhomeofficedigital+taurus_robot
     commands:
-      - npm install --quiet
-      - npm run build
       - docker build -t taurus-project-x:0.0.0 .
       - docker login -u="$${DOCKER_REPO_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${DOCKER_REPO}"
       - docker tag taurus-project-x:0.0.0 ukhomeofficedigital/taurus-project-x:0.0.0

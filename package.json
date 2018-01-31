@@ -6,8 +6,8 @@
   "scripts": {
     "start": "cp config.local.json config.json && node dist/index.js",
     "test": "cp config.test.json config.json && npm run build:test && mocha",
-    "build:test": "./node_modules/babel-cli/bin/babel.js ./src --out-dir ./dist/src --quiet && ./node_modules/babel-cli/bin/babel.js ./index.js -o ./dist/index.js --quiet && cp config.json ./dist/config.json",
-    "build:production": "./node_modules/babel-cli/bin/babel.js ./src --out-dir ./dist/src --ignore **/*.spec.js --quiet && ./node_modules/babel-cli/bin/babel.js ./index.js -o ./dist/index.js --quiet && cp config.json ./dist/config.json"
+    "build:test":       "./node_modules/babel-cli/bin/babel.js ./src --out-dir ./dist/src --quiet && ./node_modules/babel-cli/bin/babel.js ./index.js -o ./dist/index.js --quiet && cp config.json ./dist/config.json",
+    "build": "./node_modules/babel-cli/bin/babel.js ./src --out-dir ./dist/src --ignore **/*.spec.js --quiet && ./node_modules/babel-cli/bin/babel.js ./index.js -o ./dist/index.js --quiet && cp config.json ./dist/config.json"
   },
   "repository": {
     "type": "git",

@@ -12,26 +12,40 @@ pipeline:
 #      - npm install --quiet
 #      - npm test
 
+  publish-image:
+    image: docker:1.11
+    secrets:
+      - DOCKER_REPO_PASSWORD
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+      - DOCKER_REPO=quay.io
+      - DOCKER_BASEDIR=/ukhomeofficedigital/
+      - DOCKER_REPO_USER=ukhomeofficedigital+taurus_robot
+    commands:
+      - docker build -t taurus-project-x:0.0.0 .
+      - docker login -u="$${DOCKER_REPO_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${DOCKER_REPO}"
+      - docker tag taurus-project-x:0.0.0 ukhomeofficedigital/taurus-project-x:0.0.0
+      - docker push ukhomeofficedigital/taurus-project-x:0.0.0
+
   test-deployment:
     image: quay.io/ukhomeofficedigital/kd:v0.7.0
     secrets: [KUBE_SERVER, KUBE_TOKEN]
     commands:
-      - echo "deploying to namespace...."
       - bash scripts/deploy.sh
       - sleep 30
 
   # TODO: run performance test against deployed api
-  performance-test:
-    image: blazemeter/taurus:1.10.4
-    commands:
-      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
+#  performance-test:
+#    image: blazemeter/taurus:1.10.4
+#    commands:
+#      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
 
-  save-report:
-    image: quay.io/ukhomeofficedigital/awscli:latest
-    secrets: [s3_access_key, s3_secret_key, kms_key]
-    environment:
-      - AWS_DEFAULT_REGION=eu-west-2
-    commands:
-      - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
-      - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
-      - aws s3 cp taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY
+#  save-report:
+#    image: quay.io/ukhomeofficedigital/awscli:latest
+#    secrets: [s3_access_key, s3_secret_key, kms_key]
+#    environment:
+#      - AWS_DEFAULT_REGION=eu-west-2
+#    commands:
+#      - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
+#      - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
+#      - aws s3 cp taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY

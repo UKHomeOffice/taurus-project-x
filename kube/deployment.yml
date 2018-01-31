@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: taurus-project-x
-        image: robdabin/taurus-project-x:0.0.0
+        image: quay.io/ukhomeoffice/taurus-project-x:0.0.0
         ports:
         - containerPort: 80
         securityContext:

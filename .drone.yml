@@ -27,7 +27,7 @@ pipeline:
       - FULL_IMAGE_PATH=$REPOSITORY_HOST$IMAGE_DIR$IMAGE_NAME
       - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
       - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
-      - TAG=$PACKAGE_VERSION"_"SHORT_HASH"_"$DRONE_BUILD_NUMBER
+      - TAG=$PACKAGE_VERSION"_"$SHORT_HASH"_"$DRONE_BUILD_NUMBER
       - docker build -t $FULL_IMAGE_PATH:$TAG .
       - docker login -u="$${REPOSITORY_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${REPOSITORY_HOST}"
       - docker push $FULL_IMAGE_PATH:$TAG

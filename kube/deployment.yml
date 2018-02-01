@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: taurus-project-x
-        image: quay.io/ukhomeoffice/taurus-project-x:0.0.0
+        image: quay.io/ukhomeoffice/taurus-project-x:perf_test
         ports:
         - containerPort: 80
         securityContext:

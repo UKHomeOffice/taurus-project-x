@@ -43,6 +43,7 @@ pipeline:
     image: blazemeter/taurus:1.10.4
     commands:
       - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
+      - ls
 
   save-report:
     image: quay.io/ukhomeofficedigital/awscli:latest
@@ -52,4 +53,4 @@ pipeline:
     commands:
       - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
       - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
-      - aws s3 cp taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY
+      - aws s3 cp ./taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY

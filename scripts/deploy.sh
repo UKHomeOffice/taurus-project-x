@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export KUBE_NAMESPACE="Perf-Test"
+export KUBE_NAMESPACE="perf-test"
 export KUBE_SERVER=${KUBE_SERVER}
 export KUBE_TOKEN=${KUBE_TOKEN}
 

@@ -32,12 +32,12 @@ pipeline:
       - docker login -u="$${REPOSITORY_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${REPOSITORY_HOST}"
       - docker push $FULL_IMAGE_PATH:"perf_test"
 
-#  test-deployment:
-#    image: quay.io/ukhomeofficedigital/kd:v0.7.0
-#    secrets: [KUBE_SERVER, KUBE_TOKEN]
-#    commands:
-#      - bash scripts/deploy.sh
-#      - sleep 30
+  test-deployment:
+    image: quay.io/ukhomeofficedigital/kd:v0.7.0
+    secrets: [KUBE_SERVER, KUBE_TOKEN]
+    commands:
+      - bash scripts/deploy.sh
+      - sleep 30
 
   # TODO: run performance test against deployed api
   performance-test:

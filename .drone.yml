@@ -11,6 +11,7 @@ pipeline:
     commands:
       - npm install --quiet
       - npm run build
+      - npm run test
 
   publish-image:
     image: docker:1.11
@@ -18,21 +19,24 @@ pipeline:
       - DOCKER_REPO_PASSWORD
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
-      - DOCKER_REPO=quay.io
-      - DOCKER_BASEDIR=/ukhomeofficedigital/
-      - DOCKER_REPO_USER=ukhomeofficedigital+taurus_robot
+      - REPOSITORY_HOST=quay.io
+      - REPOSITORY_USER=ukhomeofficedigital+taurus_robot
+      - IMAGE_DIR=/ukhomeofficedigital/
+      - IMAGE_NAME=taurus-project-x
     commands:
-      - docker build -t taurus-project-x:0.0.0 .
-      - docker login -u="$${DOCKER_REPO_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${DOCKER_REPO}"
-      - docker tag taurus-project-x:0.0.0 ukhomeofficedigital/taurus-project-x:0.0.0
-      - docker push ukhomeofficedigital/taurus-project-x:0.0.0
+      - FULL_IMAGE_PATH=$REPOSITORY_HOST$IMAGE_DIR$IMAGE_NAME
+      - PACKAGE_VERSION=$(grep version package.json | head -1 | awk -F ":" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+      - TAG=$PACKAGE_VERSION"_"$DRONE_COMMIT"_"$DRONE_BUILD_NUMBER
+      - docker build -t $FULL_IMAGE_PATH:$TAG .
+      - docker login -u="$${REPOSITORY_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${REPOSITORY_HOST}"
+      - docker push $FULL_IMAGE_PATH:$TAG
 
-  test-deployment:
-    image: quay.io/ukhomeofficedigital/kd:v0.7.0
-    secrets: [KUBE_SERVER, KUBE_TOKEN]
-    commands:
-      - bash scripts/deploy.sh
-      - sleep 30
+#  test-deployment:
+#    image: quay.io/ukhomeofficedigital/kd:v0.7.0
+#    secrets: [KUBE_SERVER, KUBE_TOKEN]
+#    commands:
+#      - bash scripts/deploy.sh
+#      - sleep 30
 
   # TODO: run performance test against deployed api
 #  performance-test:

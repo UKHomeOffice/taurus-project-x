@@ -15,7 +15,7 @@ info "namespace: ${KUBE_NAMESPACE}"
 
 info "downloading ca for kube api"
 if ! curl --silent --fail --retry 5 \
-    https://raw.githubusercontent.com/UKHomeOffice/acp-ca/master/${DRONE_DEPLOY_TO}.crt -o /tmp/ca.crt; then
+    https://raw.githubusercontent.com/UKHomeOffice/acp-ca/master/acp-test.crt -o /tmp/ca.crt; then
   failed "downloading ca for kube api"
   exit 1
 fi

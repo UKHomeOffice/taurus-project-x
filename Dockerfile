@@ -1,6 +1,8 @@
 FROM node:9.4-alpine
 
 WORKDIR /taurus-project-x
+RUN adduser -S tpx
+USER tpx
 
 RUN apk add --update curl
 

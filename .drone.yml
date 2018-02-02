@@ -36,6 +36,8 @@ pipeline:
     image: quay.io/ukhomeofficedigital/kd:v0.7.0
     secrets: [KUBE_SERVER, KUBE_TOKEN]
     commands:
+      - apk update
+      - apk add curl
       - bash scripts/deploy.sh
       - sleep 30
 

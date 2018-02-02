@@ -4,6 +4,8 @@ WORKDIR /taurus-project-x
 
 RUN apk add --update curl
 
+EXPOSE 80
+
 COPY package.json .
 RUN npm install --quiet
 COPY dist dist

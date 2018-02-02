@@ -1,10 +1,14 @@
-apiVersion: extensions/v1beta1
+---
+apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    name: taurus-project-x-service
   name: taurus-project-x-service
 spec:
-  selector:
-    app: taurus-project-x
   ports:
-  - protocol: TCP
+  - name: http
     port: 80
+    targetPort: 80
+  selector:
+    name: taurus-project-x

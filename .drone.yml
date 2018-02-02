@@ -6,41 +6,41 @@ pipeline:
 #      - git log -1 -p | scanrepo
 #      - nsp check
 #
-  build:
-    image: node:6.11
-    commands:
-      - npm install --quiet
-      - npm run build
-      - npm run test
-      - cp config.production.json dist/config.json
-
-  publish-image:
-    image: docker:1.11
-    secrets:
-      - DOCKER_REPO_PASSWORD
-    environment:
-      - DOCKER_HOST=tcp://172.17.0.1:2375
-      - REPOSITORY_HOST=quay.io
-      - REPOSITORY_USER=ukhomeofficedigital+taurus_robot
-      - IMAGE_DIR=/ukhomeofficedigital/
-      - IMAGE_NAME=taurus-project-x
-    commands:
-      - FULL_IMAGE_PATH=$REPOSITORY_HOST$IMAGE_DIR$IMAGE_NAME
-      - PACKAGE_VERSION=$(grep version package.json | sed 's/[^0-9\.]//g' | tr -d '[[:space:]]')
-      - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
-      - TAG=$PACKAGE_VERSION"_"$SHORT_HASH"_"$DRONE_BUILD_NUMBER
-      - docker build -t $FULL_IMAGE_PATH:$TAG .
-      - docker login -u="$${REPOSITORY_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${REPOSITORY_HOST}"
-      - docker push $FULL_IMAGE_PATH:$TAG
-
-  test-deployment:
-    image: quay.io/ukhomeofficedigital/kd:v0.7.0
-    secrets: [KUBE_SERVER, KUBE_TOKEN]
-    commands:
-      - apk update
-      - apk add curl
-      - bash scripts/deploy.sh
-      - sleep 30
+#  build:
+#    image: node:6.11
+#    commands:
+#      - npm install --quiet
+#      - npm run build
+#      - npm run test
+#      - cp config.production.json dist/config.json
+#
+#  publish-image:
+#    image: docker:1.11
+#    secrets:
+#      - DOCKER_REPO_PASSWORD
+#    environment:
+#      - DOCKER_HOST=tcp://172.17.0.1:2375
+#      - REPOSITORY_HOST=quay.io
+#      - REPOSITORY_USER=ukhomeofficedigital+taurus_robot
+#      - IMAGE_DIR=/ukhomeofficedigital/
+#      - IMAGE_NAME=taurus-project-x
+#    commands:
+#      - FULL_IMAGE_PATH=$REPOSITORY_HOST$IMAGE_DIR$IMAGE_NAME
+#      - PACKAGE_VERSION=$(grep version package.json | sed 's/[^0-9\.]//g' | tr -d '[[:space:]]')
+#      - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
+#      - TAG=$PACKAGE_VERSION"_"$SHORT_HASH"_"$DRONE_BUILD_NUMBER
+#      - docker build -t $FULL_IMAGE_PATH:$TAG .
+#      - docker login -u="$${REPOSITORY_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${REPOSITORY_HOST}"
+#      - docker push $FULL_IMAGE_PATH:$TAG
+#
+#  test-deployment:
+#    image: quay.io/ukhomeofficedigital/kd:v0.7.0
+#    secrets: [KUBE_SERVER, KUBE_TOKEN]
+#    commands:
+#      - apk update
+#      - apk add curl
+#      - bash scripts/deploy.sh
+#      - sleep 30
 
   # TODO: run performance test against deployed api
   performance-test:

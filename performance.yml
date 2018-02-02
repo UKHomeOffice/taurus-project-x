@@ -12,7 +12,7 @@ execution:
 scenarios:
   quick-test:
     requests:
-    - http://blazedemo.com
+    - http://taurus-project-x.testing.acp.homeoffice.gov.uk/performance/test-one
 
 reporting:
 - module: final-stats

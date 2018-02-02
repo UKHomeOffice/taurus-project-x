@@ -1,0 +1,16 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: taurus-project-x
+  annotations:
+    kubernetes.io/ingress.class: "nginx-external"
+spec:
+  rules:
+  - host: taurus-project-x.{{ .DNS_ZONE }}
+    http:
+      paths:
+      - backend:
+          serviceName: taurus-project-x-service
+          servicePort: 80
+        path: /

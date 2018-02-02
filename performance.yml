@@ -1,3 +1,8 @@
+modules:
+  jmeter:
+    properties:
+      https.default.protocol: TLSv1.2
+
 execution:
 - concurrency: 3
   ramp-up: 1s

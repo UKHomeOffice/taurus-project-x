@@ -1,6 +1,0 @@
-#apiVersion: v1
-#kind: ConfigMap
-#metadata:
-#  name: taurus-project-x-config
-#  namespace: taurus-project-x-config
-#dataFromFile: ./config.json

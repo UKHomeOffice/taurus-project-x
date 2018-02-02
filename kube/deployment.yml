@@ -21,11 +21,3 @@ spec:
         - containerPort: 80
         securityContext:
           allowPrivilegeEscalation: false
-#        volumeMounts:
-#        - name: taurus-project-x-config
-#          mountPath: /taurus-project-x/config.json
-#          subPath: config.json
-#      volumes:
-#      - name: taurus-project-x-config
-#        configMap:
-#          name: taurus-project-x-config

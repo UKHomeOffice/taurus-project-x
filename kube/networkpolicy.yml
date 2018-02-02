@@ -1,16 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-external-ingress
+  name: taurus-project-x-network-policy
 spec:
   podSelector:
     matchLabels:
-      name: taurus-project-x
+      app: taurus-project-x
   ingress:
   - from:
     - namespaceSelector:
         matchLabels:
-          name: ingress-external
+          name: ingress-internal
     - podSelector:
         matchLabels:
           name: ingress

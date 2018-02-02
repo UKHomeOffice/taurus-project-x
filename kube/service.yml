@@ -11,4 +11,4 @@ spec:
     port: 80
     targetPort: 1337
   selector:
-    name: taurus-project-x
+    app: taurus-project-x

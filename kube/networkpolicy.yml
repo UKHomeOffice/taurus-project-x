@@ -16,4 +16,4 @@ spec:
           name: ingress
     ports:
     - protocol: TCP
-      port: 80
+      port: 1337

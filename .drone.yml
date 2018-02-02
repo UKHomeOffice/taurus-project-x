@@ -12,6 +12,7 @@ pipeline:
       - npm install --quiet
       - npm run build
       - npm run test
+      - cp config.production.json dist/config.json
 
   publish-image:
     image: docker:1.11

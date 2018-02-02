@@ -18,6 +18,6 @@ spec:
       - name: taurus-project-x
         image: quay.io/ukhomeofficedigital/taurus-project-x:0.0.0_fc20afa_64
         ports:
-        - containerPort: 80
+        - containerPort: 1337
         securityContext:
           runAsNonRoot: true

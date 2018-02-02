@@ -25,9 +25,9 @@ pipeline:
       - IMAGE_NAME=taurus-project-x
     commands:
       - FULL_IMAGE_PATH=$REPOSITORY_HOST$IMAGE_DIR$IMAGE_NAME
-      - PACKAGE_VERSION=$(grep version package.json | sed 's/[^0-9\.]//g' | tr -d '[[:space:]]')
-      - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
-      - TAG=$PACKAGE_VERSION"_"$SHORT_HASH"_"$DRONE_BUILD_NUMBER
+#      - PACKAGE_VERSION=$(grep version package.json | sed 's/[^0-9\.]//g' | tr -d '[[:space:]]')
+#      - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
+#      - TAG=$PACKAGE_VERSION"_"$SHORT_HASH"_"$DRONE_BUILD_NUMBER
       - docker build -t $FULL_IMAGE_PATH:"perf_test" .
       - docker login -u="$${REPOSITORY_USER}" -p="$${DOCKER_REPO_PASSWORD}" "$${REPOSITORY_HOST}"
       - docker push $FULL_IMAGE_PATH:"perf_test"
@@ -40,17 +40,17 @@ pipeline:
       - sleep 30
 
   # TODO: run performance test against deployed api
-  performance-test:
-    image: blazemeter/taurus:1.10.4
-    commands:
-      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
-
-  save-report:
-    image: quay.io/ukhomeofficedigital/awscli:latest
-    secrets: [s3_access_key, s3_secret_key, kms_key]
-    environment:
-      - AWS_DEFAULT_REGION=eu-west-2
-    commands:
-      - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
-      - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
-      - aws s3 cp --recursive ./taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY
+#  performance-test:
+#    image: blazemeter/taurus:1.10.4
+#    commands:
+#      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
+#
+#  save-report:
+#    image: quay.io/ukhomeofficedigital/awscli:latest
+#    secrets: [s3_access_key, s3_secret_key, kms_key]
+#    environment:
+#      - AWS_DEFAULT_REGION=eu-west-2
+#    commands:
+#      - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
+#      - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
+#      - aws s3 cp --recursive ./taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY

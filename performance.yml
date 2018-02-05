@@ -4,15 +4,17 @@ modules:
       https.default.protocol: TLSv1.2
 
 execution:
-- concurrency: 3
-  ramp-up: 1s
-  hold-for: 2s
-  scenario: quick-test
+- concurrency: 300
+  ramp-up: 2s
+  hold-for: 10s
+  scenario: example-load-test
 
 scenarios:
-  quick-test:
+  example-load-test:
     requests:
-    - http://taurus-project-x.testing.acp.homeoffice.gov.uk/performance/test-one
+    - label: get-test-one
+      method: GET
+      url: http://taurus-project-x.testing.acp.homeoffice.gov.uk/performance/test-one
 
 reporting:
 - module: final-stats
@@ -22,3 +24,10 @@ reporting:
   test-duration: true
   dump-xml: taurus_artifacts/report.xml
   dump-csv: taurus_artifacts/report.csv
+
+---
+services:
+- module: passfail
+  criteria:
+  - avg-rt>10ms for 7s, stop as failed
+  - hits of example-load-test >10 for 13s, continue as failed

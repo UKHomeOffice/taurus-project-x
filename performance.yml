@@ -2,12 +2,27 @@ modules:
   jmeter:
     properties:
       https.default.protocol: TLSv1.2
+      jmeter.save.saveservice.bytes: "true"
+      jmeter.save.saveservice.sent_bytes: "true"
+      jmeter.save.saveservice.label: "true"
+      jmeter.save.saveservice.latency: "true"
+      jmeter.save.saveservice.response_code: "true"
+      jmeter.save.saveservice.response_message: "true"
+      jmeter.save.saveservice.successful: "true"
+      jmeter.save.saveservice.thread_counts: "true"
+      jmeter.save.saveservice.thread_name: "true"
+      jmeter.save.saveservice.time: "true"
+      jmeter.save.saveservice.connect_time: "true"
+      jmeter.save.saveservice.assertion_results_failure_message: "true"
+      jmeter.save.saveservice.timestamp_format: ms
+      jmeter.reportgenerator.sample_filter: ^t0.*$
+      jmeter.reportgenerator.exporter.html.series_filter: (^t0.*$)(-success|-failure)?
 
 execution:
-- concurrency: 300
+- scenario: example-load-test
+  concurrency: 100
   ramp-up: 2s
   hold-for: 10s
-  scenario: example-load-test
 
 scenarios:
   example-load-test:
@@ -25,9 +40,9 @@ reporting:
   dump-xml: taurus_artifacts/report.xml
   dump-csv: taurus_artifacts/report.csv
 
----
-services:
-- module: passfail
-  criteria:
-  - avg-rt>10ms for 7s, stop as failed
-  - hits of example-load-test >10 for 13s, continue as failed
+#---
+#services:
+#- module: passfail
+#  criteria:
+#  - avg-rt>10ms for 7s, stop as failed
+#  - hits of example-load-test >10 for 13s, continue as failed

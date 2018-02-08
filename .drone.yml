@@ -42,20 +42,19 @@ pipeline:
       - bash scripts/deploy.sh
       - sleep 30
 
-#  # TODO: run performance test against deployed api
-#  performance-test:
-#    image: blazemeter/taurus:1.10.4
-#    commands:
-#      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
-#      - ls ~/.bzt/jmeter-taurus/
+  performance-test:
+    image: quay.io/ukhomeofficedigital/taurus-bzt:0.0.0
+    commands:
+      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
+      - bash ~/.bzt/jmeter-taurus/3.3/bin/jmeter -g taurus_artifacts/kpi.jtl -o taurus_artifacts/dashboard/
 
-#  save-report:
-#    image: quay.io/ukhomeofficedigital/awscli:latest
-#    secrets: [s3_access_key, s3_secret_key, kms_key]
-#    environment:
-#      - AWS_DEFAULT_REGION=eu-west-2
-#    commands:
-#      - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
-#      - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
-#      - aws s3 cp --recursive ./taurus_artifacts/ s3://taurus-project-x/taurus_artifacts/ --sse aws:kms --sse-kms-key-id $KMS_KEY
-
+  save-report:
+    image: quay.io/ukhomeofficedigital/awscli:latest
+    secrets: [s3_access_key, s3_secret_key, kms_key]
+    environment:
+      - AWS_DEFAULT_REGION=eu-west-2
+    commands:
+      - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
+      - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
+      - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
+      - aws s3 cp --recursive ./taurus_artifacts/dashboard/ s3://taurus-project-x/$IMAGE_NAME/$SHORT_HASH --sse aws:kms --sse-kms-key-id $KMS_KEY

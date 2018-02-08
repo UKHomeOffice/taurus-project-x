@@ -57,4 +57,4 @@ pipeline:
       - export AWS_ACCESS_KEY_ID=$S3_ACCESS_KEY
       - export AWS_SECRET_ACCESS_KEY=$S3_SECRET_KEY
       - SHORT_HASH=$(echo $DRONE_COMMIT | cut -c1-7)
-      - aws s3 cp --recursive ./taurus_artifacts/dashboard/ s3://taurus-project-x/$IMAGE_NAME/$SHORT_HASH --sse aws:kms --sse-kms-key-id $KMS_KEY
+      - aws s3 cp --recursive ./taurus_artifacts/dashboard/ s3://taurus-project-x/$SHORT_HASH --sse aws:kms --sse-kms-key-id $KMS_KEY

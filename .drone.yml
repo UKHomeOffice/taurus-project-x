@@ -45,7 +45,7 @@ pipeline:
   performance-test:
     image: quay.io/ukhomeofficedigital/taurus-bzt:0.0.0
     commands:
-      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml
+      - bzt -o settings.artifacts-dir=taurus_artifacts performance.yml -report
       - bash ~/.bzt/jmeter-taurus/3.3/bin/jmeter -g taurus_artifacts/kpi.jtl -o taurus_artifacts/dashboard/
 
   save-report:
